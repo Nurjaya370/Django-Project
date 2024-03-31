@@ -1,0 +1,7 @@
+body{
+    background-color: cyan;
+}
+.card-text{
+    color: green;
+    font-weight: 600;
+}

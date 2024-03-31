@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie-edge">
+        <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+         crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <title>Document</title>    
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/">Home</a></li>
+                        <li class="breadcrumb-item"><a href="/checkout">Checkout</a></li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <ul class="list-group" id="item_list">
+                        
+                    </ul>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">        
+                    <form method="POST">
+                      {% csrf_token %}
+                      <input type="hidden" id="items" name="items">
+
+                        <div class="form-row">
+                          <div class="form-group col-md-6">
+                            <label for="inputEmail4">Nama</label>
+                            <input id="nama" name="nama" type="text" class="form-control" placeholder="nama anda">
+                          </div>
+                          <div class="form-group col-md-6">
+                            <label for="inputPassword4">email</label>
+                            <input id="email" name="email" type="email" class="form-control" placeholder="example@gmail.com">
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label for="inputAddress">Alamat</label>
+                          <input id="alamat" name="alamat" type="text" class="form-control" placeholder="Jalan 1234 no 1A">
+                        </div>
+                        <div class="form-row">
+                          <div class="form-group col-md-6">
+                            <label for="inputCity">Provinsi</label>
+                            <input id="provinsi" name="provinsi" type="text" class="form-control" placeholder="Provinsi">
+                          </div>
+                          <div class="form-group col-md-6">
+                            <label for="inputZip">Kota</label>
+                            <input id="kota" name="kota" type="text" class="form-control" placeholder="Kota">
+                          </div>
+                        </div>
+                        <div class="form-row">
+                          <div class="form-group col-md-6">
+                            <label for="inputCity">Kecamatan</label>
+                            <input id="kecamatan" name="kecamatan" type="text" class="form-control" placeholder="Kecamatan">
+                          </div>
+                          <div class="form-group col-md-4">
+                            <label for="inputCity">Kelurahan</label>
+                            <input id="kelurahan" name="kelurahan" type="text" class="form-control" placeholder="Kelurahan">
+                          </div>
+                          <div class="form-group col-md-2">
+                            <label for="inputZip">Kode Pos</label>
+                            <input id="kodepos" name="kodepos" type="text" class="form-control" id="inputZip">
+                          </div>
+                          <div class="form-group col-md-2">
+                            <label for="totalbayar">Total Pembayaran</label>
+                            <input readonly="" type="text" class="form-control" id="total" name="total">
+                          </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Checkout</button>
+                      </form>
+                </div>
+            </div>
+        </div> 
+    </body>
+    <script type="text/javascript">
+    if(localStorage.getItem('cart')==null){
+        var cart ={};
+    }
+    else{
+        cart = JSON.parse(localStorage.getItem('cart'));
+    }
+    let total = 0;
+    for(item in cart){
+        let name = cart[item][1];
+        let quantity = cart[item][0];
+        let harga = cart[item][2];
+        total= total + cart[item][2];
+        
+        itemString = `<li class="list-group-item"><span class="">${quantity}</span> Pcs ${name}  <span class="badge badge-success badge">${harga}</span></li>`
+        $('#item_list').append(itemString);
+    }
+    totalharga = `<li class ="list-group-item d-flex justify-content-between align-items-center"><b>Total Belanja Anda</b>
+    <b>Rp.${total}</b></li>`
+    $('#total').val(total);
+    $('#item_list').append(totalharga);
+    $('#items').val(JSON.stringify(cart));
+</script>
+</html>
