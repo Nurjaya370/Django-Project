@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="card text-center">
+	<div class="card-body">
+		<h1>SELAMAT DATANG DI APLIKASI POLLING</h1>
+		<p>APLIKASI POLLING BERBASIS WEB INI DIBUAT DENGAN DJANGO</p>
+		<a class="btn btn-dark" href="{% url 'pollSistem:index' %}">
+			Tampilkan Data Polling</a>
+	</div>
+</div>
+{% endblock %}
